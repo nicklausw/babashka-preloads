@@ -20,6 +20,6 @@
          (flush)
          (if (= (read-line) "Y")
            (do
-             (mapv #(fs/move (first %) (second %)) filtered-files)
+             (mapv #(fs/move (str path "/" (first %)) (str path "/" (second %))) filtered-files)
              (println "operation succeeded."))
            (println "operation aborted.")))))))
