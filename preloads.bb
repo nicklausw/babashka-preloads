@@ -8,6 +8,13 @@
   ([replace-this with-this]
    (bulk-rename "." replace-this with-this))
   ([path replace-this with-this]
-   (let [files (fs/list-dir path)
+   (let [files (map str (fs/list-dir path))
          renamed-files (map #(str/replace % replace-this with-this) files)]
-     (mapv #(fs/move %1 %2) files renamed-files))))
+     (mapv #(println %1 "->" %2) files renamed-files)
+     (print "Okay to rename these files? [Y/N]: ")
+     (flush)
+     (if (= (read-line) "Y")
+       (do
+         (mapv #(fs/move %1 %2) files renamed-files)
+         (println "operation succeeded."))
+       (println "operation aborted.")))))
