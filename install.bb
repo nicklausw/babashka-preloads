@@ -17,12 +17,12 @@
   (shell "chmod +x" link))
 
 (let [files (->> (fs/list-dir ".")
+                 (map fs/canonicalize)
                  (map str)
                  (filter #(str/ends-with? % ".bb"))
                  (filter #(not (or (str/ends-with? % "preloads.bb") (str/ends-with? % "install.bb")))))
       symlinks (->> files
                     (map fs/file-name)
                     (map #(subs % 0 (- (count %) 3)))
-                    (map #(str bin-dir %)))
-      canons (map (comp str fs/canonicalize) files)]
-  (mapv create-symlink canons symlinks))
+                    (map #(str bin-dir %)))]
+  (mapv create-symlink files symlinks))
