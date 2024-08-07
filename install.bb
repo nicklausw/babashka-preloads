@@ -1,11 +1,10 @@
 #!/usr/bin/env bb
 
-(require '[babashka.fs :as fs])
-(require '[clojure.string :as str])
-(require '[babashka.process :refer [shell]])
+(require '[babashka.fs :as fs]
+         '[clojure.string :as str]
+         '[babashka.process :refer [shell]])
 
-(def home-dir (str (fs/home) "/"))
-(def bin-dir (str home-dir "bin/"))
+(def bin-dir (str (fs/home) "/bin/"))
 
 (when-not (fs/exists? bin-dir)
   (fs/create-dir bin-dir))
