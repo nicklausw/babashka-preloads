@@ -20,9 +20,10 @@
 (let [files (->> (fs/list-dir ".")
                  (map str)
                  (filter #(str/ends-with? % ".bb"))
-                 (filter #(and (not (str/ends-with? % "preloads.bb")) (not (str/ends-with? % "install.bb")))))
-      pathless (map fs/file-name files)
-      no-exts (map #(subs % 0 (- (count %) 3)) pathless)
-      symlinks (map #(str bin-dir %) no-exts)
+                 (filter #(not (or (str/ends-with? % "preloads.bb") (str/ends-with? % "install.bb")))))
+      symlinks (->> files
+                    (map fs/file-name)
+                    (map #(subs % 0 (- (count %) 3)))
+                    (map #(str bin-dir %)))
       canons (map (comp str fs/canonicalize) files)]
   (mapv create-symlink canons symlinks))
