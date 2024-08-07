@@ -18,12 +18,11 @@
   (shell "chmod +x" link))
 
 (let [files (->> (fs/list-dir ".")
-              (map str)
-              (filter #(str/ends-with? % ".bb"))
-              (filter #(and (not (str/ends-with? % "preloads.bb")) (not (str/ends-with? % "install.bb")))))
+                 (map str)
+                 (filter #(str/ends-with? % ".bb"))
+                 (filter #(and (not (str/ends-with? % "preloads.bb")) (not (str/ends-with? % "install.bb")))))
       pathless (map fs/file-name files)
       no-exts (map #(subs % 0 (- (count %) 3)) pathless)
       symlinks (map #(str bin-dir %) no-exts)
-      canons (map (comp str fs/canonicalize) files)
-      pairs (map list canons symlinks)]
-  (mapv #(create-symlink (first %) (second %)) pairs))
+      canons (map (comp str fs/canonicalize) files)]
+  (mapv create-symlink canons symlinks))
