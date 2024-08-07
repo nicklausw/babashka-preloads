@@ -17,10 +17,10 @@
   (shell "chmod +x" file)
   (shell "chmod +x" link))
 
-(let [files (as-> (fs/list-dir ".") x
-              (map str x)
-              (filter #(str/ends-with? % ".bb") x)
-              (filter #(and (not (str/ends-with? % "preloads.bb")) (not (str/ends-with? % "install.bb"))) x))
+(let [files (->> (fs/list-dir ".")
+              (map str)
+              (filter #(str/ends-with? % ".bb"))
+              (filter #(and (not (str/ends-with? % "preloads.bb")) (not (str/ends-with? % "install.bb")))))
       pathless (map fs/file-name files)
       no-exts (map #(subs % 0 (- (count %) 3)) pathless)
       symlinks (map #(str bin-dir %) no-exts)
