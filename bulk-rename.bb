@@ -1,7 +1,7 @@
 #!/usr/bin/env bb
 
-(require '[babashka.fs :as fs])
-(require '[clojure.string :as str])
+(require '[babashka.fs :as fs]
+         '[clojure.string :as str])
 
 (let [argc (count *command-line-args*)]
   (when-not (or (= argc 2) (= argc 3))
