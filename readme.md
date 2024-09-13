@@ -1,18 +1,13 @@
-# nicklausw's babashka preloads
+# nicklausw's babashka scripts
 
-Preloads are, of course, found in [preloads.bb](./preloads.bb).
+To install the command line tools, run [install.bb](./install.bb) and make sure `$HOME/bin` is in your PATH.
 
-For nice command line tools, run [install.bb](./install.bb) and make sure `~/bin` is in your PATH.
+Note: to pass regexes on the command line, precede string quotes with `reg:`.
 
-Set BABASHKA_PRELOADS environment variable to `(load-file "/path/to/preloads.bb")` for this to work.
+## scripts
 
-## Functions
-* `(bulk-rename path = ".", before, after)` - execute `str/replace` on all file names in a directory.
-
-## Command line tools
-Matches up with the functions, except for some slight syntactical difference for regexes: start them with `reg:` instead of `#`.
-
-Example:
+### bulk-rename
 ```bash
-bulk-rename reg:"bad tv show name episode (.*)\.mp4" "Proper TV Show Name S01E$1.mp4"
+bulk-rename path = ".", before, after
+bulk-rename reg:"bad tv show name episode (.*)\.mp4" "Proper TV Show Name S01E\$1.mp4"
 ```

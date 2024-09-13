@@ -20,7 +20,7 @@
                  (map fs/canonicalize)
                  (map str)
                  (filter #(str/ends-with? % ".bb"))
-                 (filter #(not (or (str/ends-with? % "preloads.bb") (str/ends-with? % "install.bb")))))
+                 (filter #(not (str/ends-with? % "install.bb"))))
       symlinks (->> files
                     (map fs/file-name)
                     (map #(subs % 0 (- (count %) 3)))
