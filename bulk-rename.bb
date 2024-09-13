@@ -8,7 +8,8 @@
     (System/exit 1)))
 
 (let [[arg1 arg2 arg3] *command-line-args*
-      arg1 (if (str/starts-with? arg1 "reg:") (re-pattern (subs arg1 4)) arg1)]
+      arg1 (if (str/starts-with? arg1 "reg:") (re-pattern (subs arg1 4)) arg1)
+      arg2 (if (str/starts-with? arg2 "reg:") (re-pattern (subs arg2 4)) arg2)]
   (if arg3
     (bulk-rename arg1 arg2 arg3)
     (bulk-rename arg1 arg2)))

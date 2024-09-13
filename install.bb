@@ -25,4 +25,6 @@
                     (map fs/file-name)
                     (map #(subs % 0 (- (count %) 3)))
                     (map #(str bin-dir %)))]
-  (mapv create-symlink files symlinks))
+  (doseq [f files
+          s symlinks]
+    (create-symlink f s)))

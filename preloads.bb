@@ -15,12 +15,13 @@
      (if (empty? filtered-files)
        (println "nothing renamed by operation.")
        (do
-         (mapv #(println (first %) "->" (second %)) filtered-files)
+         (doseq [f filtered-files] (println (first f) "->" (second f)))
          (print "Okay to rename these files? [Y/N]: ")
          (flush)
          (let [input (read-line)]
            (if (or (= input "y") (= input "Y"))
              (do
-               (mapv #(fs/move (str path "/" (first %)) (str path "/" (second %))) filtered-files)
+               (doseq [f filtered-files]
+                 (fs/move (str path "/" (first f)) (str path "/" (second f))))
                (println "operation succeeded."))
              (println "operation aborted."))))))))
